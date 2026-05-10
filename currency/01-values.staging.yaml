@@ -1,4 +1,7 @@
 namespace: currency-app-staging
 
+image:
+  tag: staging
+
 ingress:
   enabled: false
