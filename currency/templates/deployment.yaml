@@ -1,78 +1,72 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "currency.fullname" . }}
+  name: currency-deployment
+  namespace: {{ .Values.namespace }}
   labels:
-    {{- include "currency.labels" . | nindent 4 }}
+    {{ .Values.label.key }}: {{ .Values.label.value }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "currency.selectorLabels" . | nindent 6 }}
+      {{ .Values.label.key }}: {{ .Values.label.value }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "currency.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{ .Values.label.key }}: {{ .Values.label.value }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "currency.serviceAccountName" . }}
-      {{- with .Values.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.securityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          {{- with .Values.livenessProbe }}
-          livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
-          readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.volumeMounts }}
+      initContainers:
+        - name: fix-log-perms
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:1000 /app/server/logs"]
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+          - mountPath: /app/server/logs
+            name: currency-logs
+          securityContext:
+            runAsUser: 0
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      containers: # converted from docker-compose.yml via kompose
+        - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          name: restapi-currency
+          ports:
+            - containerPort: {{ .Values.container.port }}
+              protocol: TCP
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+          volumeMounts:
+            - mountPath: /app/server/logs
+              name: currency-logs
+            - mountPath: /app/requester/cache
+              name: restapi-currency-tmpfs0
+            - mountPath: /tmp
+              name: restapi-currency-tmpfs1
+      restartPolicy: Always
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
+        - name: currency-logs
+          hostPath:
+            path: /var/log/currency
+            type: DirectoryOrCreate
+        - emptyDir:
+            medium: Memory
+          name: restapi-currency-tmpfs0
+        - emptyDir:
+            medium: Memory
+          name: restapi-currency-tmpfs1
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: {{ .Values.label.key }}
+                operator: In
+                values:
+                - {{ .Values.label.value }}
+            topologyKey: "kubernetes.io/hostname"
