@@ -71,4 +71,4 @@ spec:
                 operator: In
                 values:
                 - {{ .Values.label.value }}
-            topologyKey: "kubernetes.io/hostname"
+              topologyKey: "kubernetes.io/hostname"
