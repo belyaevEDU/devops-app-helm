@@ -63,7 +63,7 @@ spec:
           name: restapi-currency-tmpfs1
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
+          preferredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
               - key: {{ .Values.label.key }}
