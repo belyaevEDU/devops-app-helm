@@ -18,7 +18,7 @@ spec:
     spec:
       initContainers:
         - name: fix-log-perms
-          image: gcr.io/google-containers/busybox:latest
+          image: busybox:latest
           command: ["sh", "-c", "chown -R 1000:1000 /app/server/logs"]
           volumeMounts:
           - mountPath: /app/server/logs
