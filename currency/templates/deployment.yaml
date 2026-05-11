@@ -66,9 +66,9 @@ spec:
           preferredDuringSchedulingIgnoredDuringExecution:
           - podAffinityTerm:
               labelSelector:
-              matchExpressions:
-              - key: {{ .Values.label.key }}
-                operator: In
-                values:
-                - {{ .Values.label.value }}
+                matchExpressions:
+                - key: {{ .Values.label.key }}
+                  operator: In
+                  values:
+                  - {{ .Values.label.value }}
               topologyKey: "kubernetes.io/hostname"
