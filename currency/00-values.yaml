@@ -1,26 +1,19 @@
 replicaCount: 2
-
 namespace: currency-app
-
 label:
   key: app
   value: currency
-
 image:
   repository: belyaevedu/restapi-currency
-  tag: v1.0.1
-
+  tag: v1.0.2
 container:
   port: 8000
-
 service:
   port: 8000
-
 ingress:
   enabled: true
   className: nginx
   host: currency.belyaev.work
-
 certificate:
   email: veniamin@belyaev.work
   server: https://acme-v02.api.letsencrypt.org/directory
