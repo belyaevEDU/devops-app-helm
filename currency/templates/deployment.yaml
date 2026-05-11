@@ -7,6 +7,7 @@ metadata:
     {{ .Values.label.key }}: {{ .Values.label.value }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{ .Values.label.key }}: {{ .Values.label.value }}
