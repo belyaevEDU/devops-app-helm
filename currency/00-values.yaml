@@ -1,6 +1,5 @@
 replicaCount: 2
 revisionHistoryLimit: 2
-
 namespace: currency-app
 label:
   key: app
