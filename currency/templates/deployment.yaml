@@ -11,8 +11,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       {{ .Values.label.key }}: {{ .Values.label.value }}
@@ -80,11 +80,13 @@ spec:
           name: restapi-currency-tmpfs1
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: {{ .Values.label.key }}
-                operator: In
-                values:
-                - {{ .Values.label.value }}
-            topologyKey: "kubernetes.io/hostname"
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: {{ .Values.label.key }}
+                  operator: In
+                  values:
+                  - {{ .Values.label.value }}
+              topologyKey: "kubernetes.io/hostname"
