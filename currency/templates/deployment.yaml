@@ -54,6 +54,18 @@ spec:
               name: restapi-currency-tmpfs0
             - mountPath: /tmp
               name: restapi-currency-tmpfs1
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.container.probe.liveness.path }}
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.container.probe.liveness.initialDelay }}
+            periodSeconds: {{ .Values.container.probe.liveness.period }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.container.probe.readiness.path }}
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: {{ .Values.container.probe.readiness.initialDelay }}
+            periodSeconds: {{ .Values.container.probe.readiness.period }}
       restartPolicy: Always
       volumes:
         - name: currency-logs

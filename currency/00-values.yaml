@@ -7,10 +7,21 @@ label:
 image:
   repository: belyaevedu/restapi-currency
   tag: v1.0.2
+
 container:
   port: 8000
+  probe:
+    liveness:
+      path: /docs
+      initialDelay: 10
+      period: 3
+    readiness:
+      path: /info/currency?date=2025-12-11
+      initialDelay: 10
+      period: 30
 service:
   port: 8000
+
 ingress:
   enabled: true
   className: nginx
