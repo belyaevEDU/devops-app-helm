@@ -6,8 +6,7 @@ label:
   value: currency
 image:
   repository: belyaevedu/restapi-currency
-  tag: v1.0.2
-
+  tag: v1.0.3
 container:
   port: 8000
   probe:
@@ -21,7 +20,6 @@ container:
       period: 30
 service:
   port: 8000
-
 ingress:
   enabled: true
   className: nginx
