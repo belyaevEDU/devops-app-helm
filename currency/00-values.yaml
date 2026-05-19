@@ -13,7 +13,7 @@ container:
   probe:
     liveness:
       path: /docs
-      initialDelay: 10
+      initialDelay: 7
       period: 3
     readiness:
       path: /info/currency?date=2025-12-11
