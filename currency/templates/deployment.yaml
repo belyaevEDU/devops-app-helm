@@ -80,13 +80,11 @@ spec:
           name: restapi-currency-tmpfs1
       affinity:
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: {{ .Values.label.key }}
-                  operator: In
-                  values:
-                  - {{ .Values.label.value }}
-              topologyKey: "kubernetes.io/hostname"
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: {{ .Values.label.key }}
+                operator: In
+                values:
+                - {{ .Values.label.value }}
+            topologyKey: "kubernetes.io/hostname"
