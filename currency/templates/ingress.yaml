@@ -5,7 +5,7 @@ metadata:
   name: currency-ingress
   namespace: {{ .Values.namespace }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.certificate.issuer-name }}
+    cert-manager.io/cluster-issuer: {{ .Values.certificate.issuerName }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   tls:
