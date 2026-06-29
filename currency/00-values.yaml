@@ -28,3 +28,4 @@ certificate:
   email: veniamin@belyaev.work
   server: https://acme-v02.api.letsencrypt.org/directory
   secretRef: letsencrypt-account-key
+  issuer-name: cert-issuer
