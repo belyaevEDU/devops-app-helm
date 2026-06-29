@@ -13,5 +13,9 @@ spec:
     solvers:
       - http01:
           ingress:
-            class: {{ .Values.ingress.className }}
+            ingressClassName: {{ .Values.ingress.className }}
+            podTemplate:
+              metadata:
+                annotations:
+                  haproxy.org/ssl-redirect: "false"
 {{- end }}
