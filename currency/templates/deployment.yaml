@@ -21,15 +21,6 @@ spec:
       labels:
         {{ .Values.label.key }}: {{ .Values.label.value }}
     spec:
-      initContainers:
-        - name: fix-log-perms
-          image: busybox:latest
-          command: ["sh", "-c", "chown -R 1000:1000 /app/server/logs"]
-          volumeMounts:
-          - mountPath: /app/server/logs
-            name: currency-logs
-          securityContext:
-            runAsUser: 0
       dnsConfig:
         options:
           - name: ndots
@@ -48,8 +39,6 @@ spec:
             runAsGroup: 1000
             runAsUser: 1000
           volumeMounts:
-            - mountPath: /app/server/logs
-              name: currency-logs
             - mountPath: /app/requester/cache
               name: restapi-currency-tmpfs0
             - mountPath: /tmp
@@ -68,10 +57,6 @@ spec:
             periodSeconds: {{ .Values.container.probe.readiness.period }}
       restartPolicy: Always
       volumes:
-        - name: currency-logs
-          hostPath:
-            path: /var/log/currency
-            type: DirectoryOrCreate
         - emptyDir:
             medium: Memory
           name: restapi-currency-tmpfs0
