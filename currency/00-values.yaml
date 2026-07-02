@@ -25,6 +25,7 @@ ingress:
   className: cilium
   host: currency.belyaev.work
   serviceType: NodePort
+  argoCdIgnoreHealthcheck: true
 certificate:
   email: veniamin@belyaev.work
   server: https://acme-v02.api.letsencrypt.org/directory
