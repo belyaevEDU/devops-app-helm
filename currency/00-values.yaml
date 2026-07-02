@@ -29,3 +29,6 @@ certificate:
   server: https://acme-v02.api.letsencrypt.org/directory
   secretRef: letsencrypt-account-key
   issuerName: cert-issuer
+  sslRedirectAnnotation:
+    name: ingress.cilium.io/force-https
+    value: disabled # has to be disabled

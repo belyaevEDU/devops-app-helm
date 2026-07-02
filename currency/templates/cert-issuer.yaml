@@ -17,5 +17,5 @@ spec:
             podTemplate:
               metadata:
                 annotations:
-                  haproxy.org/ssl-redirect: "false"
+                  {{ .Values.certificate.sslRedirectAnnotation.name }}: {{ .Values.certificate.sslRedirectAnnotation.value }}
 {{- end }}
