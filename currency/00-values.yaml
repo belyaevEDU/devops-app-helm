@@ -22,7 +22,7 @@ service:
   port: 8000
 ingress:
   enabled: true
-  className: haproxy
+  className: cilium
   host: currency.belyaev.work
 certificate:
   email: veniamin@belyaev.work
