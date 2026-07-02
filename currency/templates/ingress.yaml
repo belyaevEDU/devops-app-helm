@@ -7,7 +7,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: {{ .Values.certificate.issuerName }}
     ingress.cilium.io/service-type: {{ .Values.ingress.serviceType }}
-    argocd.argoproj.io/ignore-healthcheck: {{ .Values.ingress.argoCdIgnoreHealthcheck }}
+    argocd.argoproj.io/ignore-healthcheck: {{ .Values.ingress.argoCdIgnoreHealthcheck | quote }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   tls:
