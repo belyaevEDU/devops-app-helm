@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   annotations:
     cert-manager.io/cluster-issuer: {{ .Values.certificate.issuerName }}
+    ingress.cilium.io/service-type: {{ .Values.ingress.serviceType }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   tls:
