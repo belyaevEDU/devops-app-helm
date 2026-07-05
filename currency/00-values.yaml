@@ -9,6 +9,8 @@ image:
   tag: v1.0.5
 container:
   port: 8000
+  metrics:
+    port: 9100
   probe:
     liveness:
       path: /docs
@@ -19,7 +21,8 @@ container:
       initialDelay: 10
       period: 30
 service:
-  port: 8000
+  appPort: 8000
+  metricsPort: 9100
 ingress:
   enabled: true
   className: cilium
