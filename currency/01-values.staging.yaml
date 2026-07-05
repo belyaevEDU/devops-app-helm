@@ -1,6 +1,6 @@
 namespace: currency-app-staging
 image:
-  tag: staging@sha256:60c9a58d14f8f299345d15f5accc1430b51b2b570d8fb0822ae4efc703414855
+  tag: staging@sha256:23ee18f2b4142d770c053f6b4aec00adc47cec95fc037b6ed55f4e038fddb070
   repository: belyaevedu/restapi-currency
 ingress:
   enabled: false
