@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     {{ .Values.label.key }}: {{ .Values.label.value }}
-    {{ .Values.observability.label.key }}: {{ .Values.observability.label.value }}
+    {{ .Values.observability.label.key }}: {{ .Values.observability.label.value | quote }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}

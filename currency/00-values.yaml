@@ -40,6 +40,6 @@ certificate:
 observability:
   label:
     key: currency-observability
-    value: true
+    value: "true"
   serviceMonitor:
     enabled: true
