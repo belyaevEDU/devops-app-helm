@@ -34,3 +34,7 @@ certificate:
   sslRedirectAnnotation:
     name: ingress.cilium.io/force-https
     value: disabled # has to be disabled
+observability:
+  label:
+    key: currency-observability
+    value: true
