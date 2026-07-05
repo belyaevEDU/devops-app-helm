@@ -5,7 +5,6 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     {{ .Values.label.key }}: {{ .Values.label.value }}
-    {{ .Values.observability.label.key | quote }}: {{ .Values.observability.label.value | quote }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
@@ -21,6 +20,7 @@ spec:
     metadata:
       labels:
         {{ .Values.label.key }}: {{ .Values.label.value }}
+        {{ .Values.observability.label.key | quote }}: {{ .Values.observability.label.value | quote }}
     spec:
       dnsConfig:
         options:
