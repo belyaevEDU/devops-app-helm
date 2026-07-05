@@ -27,3 +27,10 @@ singleBinary:
     enabled: true
     size: 20Gi
     storageClass: "local-path" # rancher's local-path-provisioner
+
+write:
+  replicas: 0
+read:
+  replicas: 0
+backend:
+  replicas: 0
