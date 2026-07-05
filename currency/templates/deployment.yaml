@@ -4,8 +4,8 @@ metadata:
   name: currency-deployment
   namespace: {{ .Values.namespace }}
   labels:
-    {{ .Values.label.key }}: {{ .Values.label.value }}
-    {{ .Values.observability.label.key }}: {{ .Values.observability.label.value | quote }}
+    {{ .Values.label.key | quote }}: {{ .Values.label.value | quote }}
+    {{ .Values.observability.label.key | quote }}: {{ .Values.observability.label.value | quote }}
 spec:
   replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
