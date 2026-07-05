@@ -41,3 +41,5 @@ observability:
   label:
     key: currency-observability
     value: true
+  serviceMonitor:
+    enabled: true
