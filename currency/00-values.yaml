@@ -6,7 +6,7 @@ label:
   value: currency
 image:
   repository: belyaevedu/restapi-currency
-  tag: v1.0.5
+  tag: v1.0.6
 container:
   port: 8000
   metrics:
